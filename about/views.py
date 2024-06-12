@@ -8,26 +8,19 @@ def about_me(request):
     """
     Renders the About page
     """
-    
-    if request.method == "POST":
 
-        collaborate_form = CollaborateForm(data = request.POST)
-        
+    if request.method == "POST":
+        collaborate_form = CollaborateForm(data=request.POST)
         if collaborate_form.is_valid():
             collaborate_form.save()
             messages.add_message(request, messages.SUCCESS, "Collaboration request received! I endeavour to respond within 2 working days.")
 
-        about = About.objects.all().order_by('-updated_on').first()
-
+    about = About.objects.all().order_by('-updated_on').first()
     collaborate_form = CollaborateForm()
 
-
-# Die collaborate_form wurde hier mit Referenz auf forms.py hinzugefügt.
-# wird zur Kontextvariablen
-
     return render(
-    request,
-    "about/about.html",
+        request,
+        "about/about.html",
         {
             "about": about,
             "collaborate_form": collaborate_form
