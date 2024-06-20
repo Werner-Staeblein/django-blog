@@ -5,6 +5,5 @@ os.environ.setdefault(
 
 os.environ.setdefault("SECRET_KEY", "iuutfrjjBFJQx8Mc3GWIiiQQmcUDraNI")
 
-os.environ.setdefault("CLOUDINARY_URL", "cloudinary://https://console.cloudinary.com/pm/c-50284f13815aa2846a3504698117e9/developer-dashboard")
-
+os.environ.setdefault("CLOUDINARY_URL", "cloudinary://279169928573275:GHK2O@dnuvfnbwp")
 
