@@ -15,25 +15,15 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 import dj_database_url
 
 import os
-import cloudinary
-import time
-from dotenv import load_dotenv
 from pathlib import Path
+import dj_database_url
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
-# Load environment variables from .env file
-load_dotenv()
+if os.path.exists("env.py"):
+    import env
 
-# Retrieve Cloudinary credentials from environment variables
-CLOUDINARY_CLOUD_NAME = os.getenv('CLOUDINARY_CLOUD_NAME')
-CLOUDINARY_API_KEY = os.getenv('CLOUDINARY_API_KEY')
-CLOUDINARY_API_SECRET = os.getenv('CLOUDINARY_API_SECRET')
-
-# Configure Cloudinary
-cloudinary.config(
-    cloud_name=CLOUDINARY_CLOUD_NAME,
-    api_key=CLOUDINARY_API_KEY,
-    api_secret=CLOUDINARY_API_SECRET
-)
 
 # Other Django settings configurations
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -48,7 +38,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv("SECRET_KEY")
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
