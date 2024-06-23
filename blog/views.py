@@ -101,39 +101,3 @@ def comment_delete(request, slug, comment_id):
     return HttpResponseRedirect(reverse('post_detail', args=[slug]))
 
 
-def upload_to_cloudinary(request, post_id):
-    post = get_object_or_404(Post, pk=post_id)
-
-    if request.method == 'POST':
-        file_to_upload = request.FILES['file']
-
-        timestamp = str(int(time.time()))  # Ensure this timestamp is correct
-        print(f"DEBUG: Timestamp used: {timestamp}")
-
-        signature = cloudinary.utils.api_sign_request(
-            {'timestamp': timestamp, 'type': 'upload'},
-            cloudinary.config().api_secret
-        )
-        print(f"DEBUG: Generated Signature: {signature}")
-
-        try:
-            result = cloudinary.uploader.upload(
-                file_to_upload,
-                signature=signature,
-                timestamp=timestamp,
-                type='upload'
-            )
-            print(f"DEBUG: Cloudinary Response: {result}")
-
-            # Assuming you have a field in your Post model to store the Cloudinary public ID
-            post.image_public_id = result['public_id']
-            post.save()
-
-            messages.add_message(request, messages.SUCCESS, 'Image uploaded successfully!')
-
-        except Exception as e:
-            # Handle exception
-            print(f"Error uploading to Cloudinary: {e}")
-            messages.add_message(request, messages.ERROR, 'Error uploading image to Cloudinary')
-
-    return render(request, 'upload_form.html', {'post': post})
